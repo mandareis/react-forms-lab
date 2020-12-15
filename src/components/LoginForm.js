@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 class LoginForm extends React.Component {
   constructor() {
@@ -7,19 +7,53 @@ class LoginForm extends React.Component {
     this.state = {};
   }
 
+  handlesUsername = (event) => {
+    this.setState({
+      username: event.target.value,
+    });
+  };
+  handlesPassword = (event) => {
+    this.setState({
+      password: event.target.value,
+    });
+  };
+  handleSubmit = (event) => {
+    // const [state, setState] = useState({});
+    event.preventDefault();
+    if (this.state.username === "") {
+      return;
+    }
+    if (this.state.password === "") {
+      return;
+    }
+    this.props.handleLogin(this.state);
+  };
+
   render() {
     return (
-      <form>
+      <form onSubmit={(event) => this.handleSubmit(event)}>
         <div>
           <label>
             Username
-            <input id="username" name="username" type="text" />
+            <input
+              id="username"
+              name="username"
+              type="text"
+              value={this.state.username}
+              onChange={(event) => this.handlesUsername(event)}
+            />
           </label>
         </div>
         <div>
           <label>
             Password
-            <input id="password" name="password" type="password" />
+            <input
+              id="password"
+              name="password"
+              type="password"
+              value={this.state.password}
+              onChange={(event) => this.handlesPassword(event)}
+            />
           </label>
         </div>
         <div>
